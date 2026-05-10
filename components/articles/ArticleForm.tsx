@@ -100,7 +100,8 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-6xl mx-auto">
+    <>
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-6xl mx-auto">
       {/* Header Actions */}
       <div className="flex items-center justify-between gap-4 sticky top-0 bg-[#f8fafc] py-4 z-10 border-b border-slate-100 mb-6">
         <div className="flex items-center gap-4">
