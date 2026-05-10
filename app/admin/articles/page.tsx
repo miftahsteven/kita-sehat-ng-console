@@ -96,7 +96,7 @@ export default function ArticlesPage() {
             <input 
               type="text" 
               placeholder="Search articles by title..." 
-              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-[#0098b0]/20 focus:border-[#0098b0] transition-all"
+              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-[#0098b0]/20 focus:border-[#0098b0] transition-all text-slate-900"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -207,20 +207,20 @@ export default function ArticlesPage() {
           
           <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between bg-slate-50/50">
             <span className="text-sm text-slate-500 font-medium">
-              Showing {articles.length} articles {meta ? `of ${meta.total}` : ''}
+              Showing {meta ? Math.min((page - 1) * meta.limit + 1, meta.total) : 0} to {meta ? Math.min(page * meta.limit, meta.total) : 0} of {meta?.total || 0} articles
             </span>
             <div className="flex gap-2">
               <button 
-                disabled={!meta?.hasPreviousPage} 
+                disabled={!meta?.hasPreviousPage || loading} 
                 onClick={() => setPage(p => Math.max(1, p - 1))}
-                className="px-4 py-2 rounded-lg border border-slate-200 bg-white text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-colors"
+                className="px-4 py-2 rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-700 disabled:opacity-30 disabled:bg-slate-100 disabled:cursor-not-allowed hover:bg-slate-50 hover:border-[#0098b0] hover:text-[#0098b0] transition-all shadow-sm"
               >
                 Previous
               </button>
               <button 
-                disabled={!meta?.hasNextPage} 
+                disabled={!meta?.hasNextPage || loading} 
                 onClick={() => setPage(p => p + 1)}
-                className="px-4 py-2 rounded-lg border border-slate-200 bg-white text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-colors"
+                className="px-4 py-2 rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-700 disabled:opacity-30 disabled:bg-slate-100 disabled:cursor-not-allowed hover:bg-slate-50 hover:border-[#0098b0] hover:text-[#0098b0] transition-all shadow-sm"
               >
                 Next
               </button>

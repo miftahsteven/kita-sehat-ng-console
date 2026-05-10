@@ -291,7 +291,7 @@ export default function BannersPage() {
                 <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Slide Name</label>
                 <input 
                   type="text" 
-                  className="w-full p-4 rounded-2xl border border-slate-200 outline-none focus:border-[#0098b0] font-medium" 
+                  className="w-full p-4 rounded-2xl border border-slate-200 outline-none focus:border-[#0098b0] font-medium text-slate-900" 
                   placeholder="e.g. Promo Ramadhan 2024"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -356,7 +356,7 @@ export default function BannersPage() {
                   <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Target Link (URL)</label>
                   <input 
                     type="url" 
-                    className="w-full p-4 rounded-2xl border border-slate-200 outline-none focus:border-[#0098b0] font-medium" 
+                    className="w-full p-4 rounded-2xl border border-slate-200 outline-none focus:border-[#0098b0] font-medium text-slate-900" 
                     placeholder="https://example.com/promo"
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
@@ -366,7 +366,7 @@ export default function BannersPage() {
                   <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Display Order</label>
                   <input 
                     type="number" 
-                    className="w-full p-4 rounded-2xl border border-slate-200 outline-none focus:border-[#0098b0] font-medium" 
+                    className="w-full p-4 rounded-2xl border border-slate-200 outline-none focus:border-[#0098b0] font-medium text-slate-900" 
                     value={order || 0}
                     onChange={(e) => {
                       const val = parseInt(e.target.value);

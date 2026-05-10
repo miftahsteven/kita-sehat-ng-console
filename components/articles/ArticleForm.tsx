@@ -146,7 +146,7 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
             <input 
               type="text" 
               placeholder="Judul artikel..." 
-              className="w-full text-4xl font-extrabold text-slate-900 outline-none placeholder:text-slate-200 border-none p-0 focus:ring-0"
+              className="w-full text-4xl font-extrabold text-slate-900 outline-none placeholder:text-slate-400 border-none p-0 focus:ring-0"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -154,7 +154,7 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
             
             <textarea 
               placeholder="Ringkasan/excerpt artikel (untuk preview di listing)..." 
-              className="w-full text-lg text-slate-900 outline-none placeholder:text-slate-200 border-none p-0 resize-none h-20 font-medium focus:ring-0"
+              className="w-full text-lg text-slate-900 outline-none placeholder:text-slate-400 border-none p-0 resize-none h-20 font-medium focus:ring-0"
               value={excerpt}
               onChange={(e) => setExcerpt(e.target.value)}
               required
