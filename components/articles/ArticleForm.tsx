@@ -44,6 +44,14 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
   const [isEditorPick, setIsEditorPick] = useState(initialData?.isEditorPick || false);
   
   const router = useRouter();
+  
+  const getImageUrl = (url: string) => {
+    if (!url) return "";
+    if (url.startsWith("http")) return url;
+    const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:4003").replace(/\/$/, "");
+    const safeUrl = url.startsWith("/") ? url : `/${url}`;
+    return `${API_BASE}${safeUrl}`;
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -333,7 +341,7 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
               {coverImage ? (
                 <div className="space-y-3">
                   <div className="relative aspect-video rounded-xl overflow-hidden group shadow-sm">
-                    <img src={coverImage} className="w-full h-full object-cover" />
+                    <img src={getImageUrl(coverImage)} className="w-full h-full object-cover" />
                     <div 
                       onClick={() => setIsMediaOpen(true)}
                       className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer"

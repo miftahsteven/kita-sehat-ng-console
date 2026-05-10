@@ -31,7 +31,7 @@ export default function ArticlesPage() {
     async function fetchArticles() {
       setLoading(true);
       try {
-        const res = await apiFetch(`/api/admin/articles?page=${page}`);
+        const res = await apiFetch(`/api/admin/articles?page=${page}&search=${searchTerm}`);
         setArticles(res.data);
         setMeta(res.meta);
       } catch (err) {
@@ -40,13 +40,26 @@ export default function ArticlesPage() {
         setLoading(false);
       }
     }
-    fetchArticles();
-  }, [page]);
+    
+    // Debounce search
+    const timer = setTimeout(() => {
+      fetchArticles();
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, [page, searchTerm]);
+
+  // Reset page when search term changes
+  useEffect(() => {
+    setPage(1);
+  }, [searchTerm]);
 
   const getImageUrl = (url: string) => {
     if (!url) return "https://placehold.co/100x60";
     if (url.startsWith("http")) return url;
-    return `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4003"}${url}`;
+    const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:4003").replace(/\/$/, "");
+    const safeUrl = url.startsWith("/") ? url : `/${url}`;
+    return `${API_BASE}${safeUrl}`;
   };
 
   const getStatusBadge = (status: string) => {
@@ -128,7 +141,7 @@ export default function ArticlesPage() {
                     </tr>
                   ))
                 ) : (
-                  articles.filter((a: any) => a.title.toLowerCase().includes(searchTerm.toLowerCase())).map((article: any) => (
+                  articles.map((article: any) => (
                     <tr key={article.id} className="hover:bg-slate-50 group">
                       <td className="px-6 py-5">
                         <div className="flex items-center gap-4">

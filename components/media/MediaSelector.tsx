@@ -74,7 +74,7 @@ export default function MediaSelector({ isOpen, onClose, onSelect }: MediaSelect
         method: "POST",
         body: JSON.stringify({ url: imgUrl }),
       });
-      onSelect(`${API_URL}${res.data.url}`);
+      onSelect(res.data.url);
       onClose();
     } catch (err) {
       alert("Failed to download from Unsplash");
@@ -125,7 +125,7 @@ export default function MediaSelector({ isOpen, onClose, onSelect }: MediaSelect
                   {assets.map((asset) => (
                     <div 
                       key={asset.id} 
-                      onClick={() => { onSelect(`${API_URL}${asset.url}`); onClose(); }}
+                      onClick={() => { onSelect(asset.url); onClose(); }}
                       className="group relative aspect-square rounded-2xl overflow-hidden border-2 border-slate-100 hover:border-[#0098b0] cursor-pointer transition-all hover:shadow-xl"
                     >
                       <img src={`${API_URL}${asset.url}`} className="w-full h-full object-cover" />
