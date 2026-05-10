@@ -50,7 +50,9 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
     if (url.startsWith("http")) return url;
     const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:4003").replace(/\/$/, "");
     const safeUrl = url.startsWith("/") ? url : `/${url}`;
-    return `${API_BASE}${safeUrl}`;
+    const finalUrl = `${API_BASE}${safeUrl}`;
+    console.log("DEBUG_IMAGE_URL:", { original: url, final: finalUrl, env: process.env.NEXT_PUBLIC_API_URL });
+    return finalUrl;
   };
 
   useEffect(() => {
