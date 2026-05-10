@@ -94,12 +94,14 @@ export default function MediaSelector({ isOpen, onClose, onSelect }: MediaSelect
             <h2 className="text-xl font-bold text-slate-800">Media Selector</h2>
             <div className="flex bg-slate-100 p-1 rounded-xl">
               <button 
+                type="button"
                 onClick={() => setActiveTab("library")}
                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${activeTab === "library" ? "bg-white text-[#0098b0] shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
               >
                 <ImageIcon size={16} /> Library
               </button>
               <button 
+                type="button"
                 onClick={() => setActiveTab("unsplash")}
                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${activeTab === "unsplash" ? "bg-white text-[#0098b0] shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
               >
@@ -107,7 +109,7 @@ export default function MediaSelector({ isOpen, onClose, onSelect }: MediaSelect
               </button>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition-all">
+          <button type="button" onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition-all">
             <X size={24} className="text-slate-400" />
           </button>
         </div>

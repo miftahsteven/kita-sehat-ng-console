@@ -355,12 +355,12 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
           </div>
         </div>
       </div>
-
+    </form>
       <MediaSelector 
         isOpen={isMediaOpen} 
         onClose={() => setIsMediaOpen(false)} 
         onSelect={(url) => setCoverImage(url)} 
       />
-    </form>
+    </>
   );
 }
