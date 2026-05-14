@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { apiFetch } from "@/lib/api";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("admin@kita-sehat.id");
-  const [password, setPassword] = useState("AdminKitaSehat123!");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      
+
       router.push("/admin/dashboard");
     } catch (err: any) {
       setError(err.message);
@@ -36,9 +36,9 @@ export default function LoginPage() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
-      <div 
+      <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 scale-105"
-        style={{ 
+        style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop')`,
         }}
       >
@@ -68,7 +68,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-white/50 p-4 text-slate-900 outline-none transition-all focus:border-[#0098b0] focus:ring-4 focus:ring-[#0098b0]/10"
-                placeholder="admin@kita-sehat.id"
+                placeholder="email address"
                 required
               />
             </div>
