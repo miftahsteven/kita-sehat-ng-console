@@ -15,7 +15,8 @@ import {
   ChevronRight,
   Menu,
   X,
-  Plus
+  Plus,
+  Info
 } from "lucide-react";
 
 interface MainLayoutProps {
@@ -53,6 +54,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     { name: "Authors", icon: Users, path: "/admin/authors" },
     { name: "Media", icon: ImageIcon, path: "/admin/media" },
     { name: "Banners", icon: Megaphone, path: "/admin/banners" },
+    { name: "About Us", icon: Info, path: "/admin/about-us" },
     { name: "Settings", icon: Settings, path: "/admin/settings" },
   ];
 
