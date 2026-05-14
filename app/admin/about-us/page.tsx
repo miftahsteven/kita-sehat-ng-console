@@ -3,6 +3,7 @@
 import React, { useState, useRef } from "react";
 import { Info, Upload, Save, CheckCircle, Trash2 } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
+import { apiFetch } from "@/lib/api";
 
 interface FounderData {
   name: string;
@@ -147,13 +148,10 @@ export default function AboutUsAdminPage() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const API_URL = "http://localhost:4003/api/settings";
-
   React.useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
+        const data = await apiFetch("/api/settings");
         if (data.success) {
           const s = data.data;
           if (s.about_founder1_name) {
@@ -186,9 +184,8 @@ export default function AboutUsAdminPage() {
     setIsSaving(true);
     setError("");
     try {
-      const response = await fetch(API_URL, {
+      const data = await apiFetch("/api/settings", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           settings: {
             about_founder1_name: founder1.name,
@@ -203,15 +200,14 @@ export default function AboutUsAdminPage() {
         })
       });
 
-      const data = await response.json();
       if (data.success) {
         setShowSuccess(true);
         setTimeout(() => setShowSuccess(false), 3000);
       } else {
         setError(data.message || "Failed to save settings");
       }
-    } catch (err) {
-      setError("Network error. Please try again.");
+    } catch (err: any) {
+      setError(err.message || "Network error. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -264,6 +260,13 @@ export default function AboutUsAdminPage() {
             </button>
           </div>
         </div>
+
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-600 px-6 py-4 rounded-2xl font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+            <Info size={20} />
+            {error}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 gap-8">
           {/* Founder 1 Form */}
