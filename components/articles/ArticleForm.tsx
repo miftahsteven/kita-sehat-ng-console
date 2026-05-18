@@ -15,7 +15,9 @@ import {
   ArrowLeft,
   LayoutDashboard,
   Star,
-  Award
+  Award,
+  Upload,
+  Loader2
 } from "lucide-react";
 
 import MediaSelector from "@/components/media/MediaSelector";
@@ -37,6 +39,34 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
   const [loading, setLoading] = useState(false);
   const [coverImage, setCoverImage] = useState(initialData?.coverImage || "");
   const [isMediaOpen, setIsMediaOpen] = useState(false);
+  const [uploadingDirect, setUploadingDirect] = useState(false);
+
+  const handleDirectUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setUploadingDirect(true);
+    try {
+      const res = await apiFetch("/api/admin/media/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.data?.url) {
+        setCoverImage(res.data.url);
+      } else {
+        alert("Gagal mengunggah file");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Gagal mengunggah file");
+    } finally {
+      setUploadingDirect(false);
+    }
+  };
   
   // New fields
   const [isFeatured, setIsFeatured] = useState(initialData?.isFeatured || false);
@@ -351,17 +381,65 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
                       <span className="text-white text-xs font-bold bg-white/20 px-3 py-1.5 rounded-lg backdrop-blur-md">Ganti Gambar</span>
                     </div>
                   </div>
+                  {/* Option to remove or change */}
+                  <div className="flex gap-2 justify-center">
+                    <button 
+                      type="button"
+                      onClick={() => setIsMediaOpen(true)}
+                      className="text-xs text-[#0098b0] hover:underline font-bold cursor-pointer"
+                    >
+                      Ganti dari Library
+                    </button>
+                    <span className="text-slate-300">|</span>
+                    <button 
+                      type="button"
+                      onClick={() => setCoverImage("")}
+                      className="text-xs text-red-500 hover:underline font-bold cursor-pointer"
+                    >
+                      Hapus
+                    </button>
+                  </div>
                 </div>
               ) : (
-                <div 
-                  onClick={() => setIsMediaOpen(true)}
-                  className="aspect-video rounded-xl bg-slate-50 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 cursor-pointer hover:bg-slate-100 hover:border-[#0098b0] transition-all"
-                >
-                  <ImageIcon size={32} strokeWidth={1.5} />
-                  <span className="text-xs font-bold mt-2">Pilih Gambar</span>
+                <div className="space-y-3">
+                  <div 
+                    onClick={() => setIsMediaOpen(true)}
+                    className="aspect-video rounded-xl bg-slate-50 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 cursor-pointer hover:bg-slate-100 hover:border-[#0098b0] transition-all"
+                  >
+                    <ImageIcon size={32} strokeWidth={1.5} />
+                    <span className="text-xs font-bold mt-2">Pilih Gambar</span>
+                  </div>
+
+                  {/* Direct upload option */}
+                  <div className="relative">
+                    <input 
+                      type="file" 
+                      id="direct-cover-upload" 
+                      className="hidden" 
+                      accept="image/*"
+                      onChange={handleDirectUpload}
+                      disabled={uploadingDirect}
+                    />
+                    <label 
+                      htmlFor="direct-cover-upload"
+                      className="w-full py-2.5 px-4 rounded-xl border border-[#0098b0]/30 bg-cyan-50/10 text-xs font-bold text-[#0098b0] hover:bg-cyan-50/50 hover:border-[#0098b0] cursor-pointer flex items-center justify-center gap-2 transition-all"
+                    >
+                      {uploadingDirect ? (
+                        <>
+                          <Loader2 className="animate-spin" size={14} />
+                          Mengunggah...
+                        </>
+                      ) : (
+                        <>
+                          <Upload size={14} />
+                          Upload Gambar Langsung
+                        </>
+                      )}
+                    </label>
+                  </div>
                 </div>
               )}
-              <p className="text-[10px] text-slate-400 mt-3 italic leading-relaxed text-center">Format: JPG, PNG, WEBP. Maks: 2MB</p>
+              <p className="text-[10px] text-slate-400 mt-3 italic leading-relaxed text-center font-medium">Format: JPG, PNG, WEBP. Maks: 2MB</p>
             </div>
           </div>
         </div>

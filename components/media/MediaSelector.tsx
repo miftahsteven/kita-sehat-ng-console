@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { 
   X, 
   Search, 
@@ -28,6 +28,36 @@ export default function MediaSelector({ isOpen, onClose, onSelect }: MediaSelect
   const [search, setSearch] = useState("");
   const [unsplashImages, setUnsplashImages] = useState<any[]>([]);
   const [fetchingUnsplash, setFetchingUnsplash] = useState(false);
+  const [uploadingNew, setUploadingNew] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleUploadNew = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setUploadingNew(true);
+    try {
+      const res = await apiFetch("/api/admin/media/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.data?.url) {
+        onSelect(res.data.url);
+        onClose();
+      } else {
+        alert("Gagal mengunggah file");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Gagal mengunggah file");
+    } finally {
+      setUploadingNew(false);
+    }
+  };
 
   useEffect(() => {
     if (isOpen && activeTab === "library") {
@@ -134,9 +164,25 @@ export default function MediaSelector({ isOpen, onClose, onSelect }: MediaSelect
                       </div>
                     </div>
                   ))}
-                  <div className="aspect-square rounded-2xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-2 text-slate-400 hover:border-[#0098b0] hover:text-[#0098b0] transition-all cursor-pointer">
-                    <Upload size={24} />
-                    <p className="text-[10px] font-bold uppercase">Upload New</p>
+                  <div 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="aspect-square rounded-2xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-2 text-slate-400 hover:border-[#0098b0] hover:text-[#0098b0] transition-all cursor-pointer relative group"
+                  >
+                    <input 
+                      type="file" 
+                      ref={fileInputRef} 
+                      onChange={handleUploadNew} 
+                      className="hidden" 
+                      accept="image/*" 
+                    />
+                    {uploadingNew ? (
+                      <Loader2 className="animate-spin text-[#0098b0]" size={24} />
+                    ) : (
+                      <>
+                        <Upload size={24} />
+                        <p className="text-[10px] font-bold uppercase">Upload New</p>
+                      </>
+                    )}
                   </div>
                 </div>
               )}
