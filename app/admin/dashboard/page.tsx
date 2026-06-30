@@ -46,6 +46,13 @@ export default function DashboardPage() {
   const getImageUrl = (url: string) => {
     if (!url) return "https://placehold.co/100x60";
     if (url.startsWith("http")) return url;
+
+    // Serve uploaded images from the production API URL in development
+    if (url.startsWith("/uploads/") || url.startsWith("uploads/")) {
+      const safeUrl = url.startsWith("/") ? url : `/${url}`;
+      return `https://api.kita-sehat.id${safeUrl}`;
+    }
+
     return `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4003"}${url}`;
   };
 
