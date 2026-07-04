@@ -16,7 +16,8 @@ import {
   Menu,
   X,
   Plus,
-  Info
+  Info,
+  MessageSquare
 } from "lucide-react";
 
 interface MainLayoutProps {
@@ -55,6 +56,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     { name: "Media", icon: ImageIcon, path: "/admin/media" },
     { name: "Banners", icon: Megaphone, path: "/admin/banners" },
     { name: "About Us", icon: Info, path: "/admin/about-us" },
+    { name: "Feedbacks", icon: MessageSquare, path: "/admin/feedbacks" },
     { name: "Settings", icon: Settings, path: "/admin/settings" },
   ];
 

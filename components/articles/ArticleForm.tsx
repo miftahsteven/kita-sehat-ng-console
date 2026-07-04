@@ -72,6 +72,7 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
   const [isFeatured, setIsFeatured] = useState(initialData?.isFeatured || false);
   const [isHero, setIsHero] = useState(initialData?.isHero || false);
   const [isEditorPick, setIsEditorPick] = useState(initialData?.isEditorPick || false);
+  const [feedbackFormEnabled, setFeedbackFormEnabled] = useState(initialData?.feedbackFormEnabled || false);
   
   const router = useRouter();
   
@@ -135,6 +136,7 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
           isFeatured,
           isHero,
           isEditorPick,
+          feedbackFormEnabled,
         }),
       });
       router.push("/admin/articles");
@@ -308,6 +310,25 @@ export default function ArticleForm({ initialData, isEdit = false }: ArticleForm
                       Editor Picks
                     </span>
                     <span className="text-[10px] text-slate-400">Pilihan redaksi kita sehat</span>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer group">
+                  <div className={`w-10 h-6 rounded-full transition-all relative ${feedbackFormEnabled ? 'bg-emerald-500' : 'bg-slate-200'}`}>
+                    <input 
+                      type="checkbox" 
+                      className="hidden" 
+                      checked={feedbackFormEnabled}
+                      onChange={(e) => setFeedbackFormEnabled(e.target.checked)}
+                    />
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${feedbackFormEnabled ? 'left-5' : 'left-1'}`}></div>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-slate-700 flex items-center gap-1">
+                      <Settings size={14} className="text-slate-400" />
+                      Feedback Form
+                    </span>
+                    <span className="text-[10px] text-slate-400">Aktifkan form feedback di artikel</span>
                   </div>
                 </label>
               </div>
