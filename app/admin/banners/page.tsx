@@ -30,9 +30,11 @@ export default function BannersPage() {
   const [settings, setSettings] = useState<any>({
     BANNER_HEADER_ENABLED: false,
     BANNER_MIDDLE_ENABLED: false,
+    BANNER_SUB_TOPIC_ENABLED: false,
+    BANNER_MINI_ADS_ENABLED: false,
   });
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"HEADER_TOP" | "BELOW_HERO">("HEADER_TOP");
+  const [activeTab, setActiveTab] = useState<"HEADER_TOP" | "BELOW_HERO" | "SUB_TOPIC" | "MINI_ADS">("HEADER_TOP");
   
   // Form State
   const [showForm, setShowForm] = useState(false);
@@ -173,14 +175,14 @@ export default function BannersPage() {
         </div>
 
         {/* Global Toggles */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-2xl border border-slate-100 flex items-center justify-between shadow-sm">
-            <div className="flex items-center gap-4">
-              <div className={`p-3 rounded-xl ${settings.BANNER_HEADER_ENABLED ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"}`}>
-                <Layout size={24} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+          <div className="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between shadow-sm">
+            <div className="flex items-center gap-3.5">
+              <div className={`p-2.5 rounded-xl ${settings.BANNER_HEADER_ENABLED ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"}`}>
+                <Layout size={22} />
               </div>
               <div>
-                <p className="font-bold text-slate-800">Header Ad Slot</p>
+                <p className="font-bold text-sm text-slate-800">Header Ad Slot</p>
                 <p className="text-xs text-slate-500">Top of every page</p>
               </div>
             </div>
@@ -188,17 +190,17 @@ export default function BannersPage() {
               onClick={() => handleToggleSetting("BANNER_HEADER_ENABLED", !settings.BANNER_HEADER_ENABLED)}
               className={`transition-all ${settings.BANNER_HEADER_ENABLED ? "text-[#0098b0]" : "text-slate-300"}`}
             >
-              {settings.BANNER_HEADER_ENABLED ? <ToggleRight size={48} strokeWidth={1.5} /> : <ToggleLeft size={48} strokeWidth={1.5} />}
+              {settings.BANNER_HEADER_ENABLED ? <ToggleRight size={42} strokeWidth={1.5} /> : <ToggleLeft size={42} strokeWidth={1.5} />}
             </button>
           </div>
           
-          <div className="bg-white p-6 rounded-2xl border border-slate-100 flex items-center justify-between shadow-sm">
-            <div className="flex items-center gap-4">
-              <div className={`p-3 rounded-xl ${settings.BANNER_MIDDLE_ENABLED ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"}`}>
-                <Monitor size={24} />
+          <div className="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between shadow-sm">
+            <div className="flex items-center gap-3.5">
+              <div className={`p-2.5 rounded-xl ${settings.BANNER_MIDDLE_ENABLED ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"}`}>
+                <Monitor size={22} />
               </div>
               <div>
-                <p className="font-bold text-slate-800">Middle Ad Slot</p>
+                <p className="font-bold text-sm text-slate-800">Middle Ad Slot</p>
                 <p className="text-xs text-slate-500">Below the hero section</p>
               </div>
             </div>
@@ -206,25 +208,73 @@ export default function BannersPage() {
               onClick={() => handleToggleSetting("BANNER_MIDDLE_ENABLED", !settings.BANNER_MIDDLE_ENABLED)}
               className={`transition-all ${settings.BANNER_MIDDLE_ENABLED ? "text-[#0098b0]" : "text-slate-300"}`}
             >
-              {settings.BANNER_MIDDLE_ENABLED ? <ToggleRight size={48} strokeWidth={1.5} /> : <ToggleLeft size={48} strokeWidth={1.5} />}
+              {settings.BANNER_MIDDLE_ENABLED ? <ToggleRight size={42} strokeWidth={1.5} /> : <ToggleLeft size={42} strokeWidth={1.5} />}
+            </button>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between shadow-sm">
+            <div className="flex items-center gap-3.5">
+              <div className={`p-2.5 rounded-xl ${settings.BANNER_SUB_TOPIC_ENABLED ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"}`}>
+                <Layout size={22} />
+              </div>
+              <div>
+                <p className="font-bold text-sm text-slate-800">Sub Topic Banner</p>
+                <p className="text-xs text-slate-500">Top of category articles</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => handleToggleSetting("BANNER_SUB_TOPIC_ENABLED", !settings.BANNER_SUB_TOPIC_ENABLED)}
+              className={`transition-all ${settings.BANNER_SUB_TOPIC_ENABLED ? "text-[#0098b0]" : "text-slate-300"}`}
+            >
+              {settings.BANNER_SUB_TOPIC_ENABLED ? <ToggleRight size={42} strokeWidth={1.5} /> : <ToggleLeft size={42} strokeWidth={1.5} />}
+            </button>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between shadow-sm">
+            <div className="flex items-center gap-3.5">
+              <div className={`p-2.5 rounded-xl ${settings.BANNER_MINI_ADS_ENABLED ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"}`}>
+                <Monitor size={22} />
+              </div>
+              <div>
+                <p className="font-bold text-sm text-slate-800">Mini Ads Slot</p>
+                <p className="text-xs text-slate-500">Above popular articles</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => handleToggleSetting("BANNER_MINI_ADS_ENABLED", !settings.BANNER_MINI_ADS_ENABLED)}
+              className={`transition-all ${settings.BANNER_MINI_ADS_ENABLED ? "text-[#0098b0]" : "text-slate-300"}`}
+            >
+              {settings.BANNER_MINI_ADS_ENABLED ? <ToggleRight size={42} strokeWidth={1.5} /> : <ToggleLeft size={42} strokeWidth={1.5} />}
             </button>
           </div>
         </div>
 
         {/* Banner Tabs */}
         <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
-          <div className="flex border-b border-slate-100">
+          <div className="flex border-b border-slate-100 overflow-x-auto">
             <button 
               onClick={() => setActiveTab("HEADER_TOP")}
-              className={`px-8 py-5 text-sm font-bold border-b-2 transition-all ${activeTab === "HEADER_TOP" ? "border-[#0098b0] text-[#0098b0] bg-cyan-50/30" : "border-transparent text-slate-400 hover:text-slate-600"}`}
+              className={`px-6 md:px-8 py-5 text-sm font-bold border-b-2 whitespace-nowrap transition-all ${activeTab === "HEADER_TOP" ? "border-[#0098b0] text-[#0098b0] bg-cyan-50/30" : "border-transparent text-slate-400 hover:text-slate-600"}`}
             >
               Header Banners
             </button>
             <button 
               onClick={() => setActiveTab("BELOW_HERO")}
-              className={`px-8 py-5 text-sm font-bold border-b-2 transition-all ${activeTab === "BELOW_HERO" ? "border-[#0098b0] text-[#0098b0] bg-cyan-50/30" : "border-transparent text-slate-400 hover:text-slate-600"}`}
+              className={`px-6 md:px-8 py-5 text-sm font-bold border-b-2 whitespace-nowrap transition-all ${activeTab === "BELOW_HERO" ? "border-[#0098b0] text-[#0098b0] bg-cyan-50/30" : "border-transparent text-slate-400 hover:text-slate-600"}`}
             >
               Middle Banners
+            </button>
+            <button 
+              onClick={() => setActiveTab("SUB_TOPIC")}
+              className={`px-6 md:px-8 py-5 text-sm font-bold border-b-2 whitespace-nowrap transition-all ${activeTab === "SUB_TOPIC" ? "border-[#0098b0] text-[#0098b0] bg-cyan-50/30" : "border-transparent text-slate-400 hover:text-slate-600"}`}
+            >
+              Sub Topic Banners
+            </button>
+            <button 
+              onClick={() => setActiveTab("MINI_ADS")}
+              className={`px-6 md:px-8 py-5 text-sm font-bold border-b-2 whitespace-nowrap transition-all ${activeTab === "MINI_ADS" ? "border-[#0098b0] text-[#0098b0] bg-cyan-50/30" : "border-transparent text-slate-400 hover:text-slate-600"}`}
+            >
+              Mini Ads
             </button>
           </div>
 
@@ -322,7 +372,12 @@ export default function BannersPage() {
                       </>
                     )}
                   </div>
-                  <p className="text-[10px] text-slate-400 italic">Recommended: 1200x300px (Header) / 1200x200px (Middle)</p>
+                  <p className="text-[10px] text-slate-400 italic">
+                    {activeTab === "HEADER_TOP" && "Recommended: 970x90px / 728x90px (Header)"}
+                    {activeTab === "BELOW_HERO" && "Recommended: 1200x200px (Middle)"}
+                    {activeTab === "SUB_TOPIC" && "Recommended: 800x160px / 1200x240px (Sub Topic Banner)"}
+                    {activeTab === "MINI_ADS" && "Recommended: 300x160px / 300x250px (Mini Ads)"}
+                  </p>
                 </div>
 
                 <div className="space-y-4">
