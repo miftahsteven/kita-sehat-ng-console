@@ -373,10 +373,10 @@ export default function BannersPage() {
                     )}
                   </div>
                   <p className="text-[10px] text-slate-400 italic">
-                    {activeTab === "HEADER_TOP" && "Recommended: 970x90px / 728x90px (Header)"}
-                    {activeTab === "BELOW_HERO" && "Recommended: 1200x200px (Middle)"}
-                    {activeTab === "SUB_TOPIC" && "Recommended: 800x160px / 1200x240px (Sub Topic Banner)"}
-                    {activeTab === "MINI_ADS" && "Recommended: 300x160px / 300x250px (Mini Ads)"}
+                    {activeTab === "HEADER_TOP" && "Recommended: 728x90px (Header Leaderboard - di samping logo)"}
+                    {activeTab === "BELOW_HERO" && "Recommended: 970x220px / 970x250px atau 1600x364px (Middle Banner - Rasio ~4.4:1)"}
+                    {activeTab === "SUB_TOPIC" && "Recommended: 1200x240px / 800x160px (Sub Topic Banner)"}
+                    {activeTab === "MINI_ADS" && "Recommended: 300x250px / 300x160px (Mini Ads)"}
                   </p>
                 </div>
 
@@ -402,7 +402,12 @@ export default function BannersPage() {
                       </>
                     )}
                   </div>
-                  <p className="text-[10px] text-slate-400 italic">Recommended: 600x400px</p>
+                  <p className="text-[10px] text-slate-400 italic">
+                    {activeTab === "HEADER_TOP" && "Recommended: 320x50px atau 640x100px (Mobile Header)"}
+                    {activeTab === "BELOW_HERO" && "Recommended: 600x150px / 360x90px (Mobile Middle - Rasio ~4:1)"}
+                    {activeTab === "SUB_TOPIC" && "Recommended: 600x200px atau 600x300px"}
+                    {activeTab === "MINI_ADS" && "Recommended: 300x250px (Mobile Mini Ads)"}
+                  </p>
                 </div>
               </div>
 
